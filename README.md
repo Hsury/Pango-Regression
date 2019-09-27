@@ -1,0 +1,13 @@
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/1.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/2.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/3.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/4.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/5.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/6.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/7.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/8.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/9.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/10.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/11.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/12.jpg"></p>
+<p align="center"><img src="https://cdn.kagamiz.com/Pango-Regression/13.jpg"></p>
