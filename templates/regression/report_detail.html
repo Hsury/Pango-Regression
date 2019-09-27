@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Regression Report Detail of {{ task }}</title>
+</head>
+<body>
+  <div style="text-align: center"><a href="/"><img src="{% static 'pango-logo.png' %}" alt="Pango" /></a></div>
+  <h1 style="text-align: center">Regression Report Detail</h1>
+  <h2 style="font-size: 39%; text-align: center">Time: {{ format_time }}</h2>
+  <h2 style="font-size: 39%; text-align: center">Task: {% if task_link %}<a href="{{ task_link }}">{{ task }}</a>{% else %}{{ task }}{% endif %}</h2>
+  <h2 style="font-size: 39%; text-align: center">Project: {% if project_link %}<a href="{{ project_link }}">{{ project }}</a>{% else %}{{ project }}{% endif %}</h2>
+  <p style="font-size: 39%; text-align: center"><a href="../">View Report List</a></p>
+  <br/>
+  <div id="app0">
+    <v-table
+      is-horizontal-resize
+      style="width: 100%"
+      :columns="columns"
+      :table-data="tableData"
+      row-hover-color="#eee"
+    ></v-table>
+  </div>
+  <br/>
+  <div id="app1">
+    <v-table
+      is-horizontal-resize
+      style="width: 100%"
+      :columns="columns"
+      :table-data="tableData"
+      row-hover-color="#eee"
+      row-click-color="#f0edff"
+    ></v-table>
+  </div>
+  <script src="{% static 'vue.min.js' %}"></script>
+  <script src="{% static 'vue-easytable/index.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'vue-easytable/index.css' %}">
+  <script>
+    new Vue({
+      el: '#app0',
+      data: function() {
+        return {
+          tableData: [
+            {'total': {{ statistic.total }}, 'pass': {{ statistic.pass }}, 'fail': {{ statistic.fail }}, 'unknown': {{ statistic.unknown }}, 'passing_rate': {{ statistic.passing_rate }}}
+          ],
+          columns: [
+            {field: 'total', title: 'Total', width: 50, titleAlign: 'center', columnAlign: 'center', isResize: true},
+            {field: 'pass', title: 'Pass', width: 50, titleAlign: 'center', columnAlign: 'center', isResize: true},
+            {field: 'fail', title: 'Failed', width: 50, titleAlign: 'center', columnAlign: 'center', isResize: true},
+            {field: 'unknown', title: 'Unknown', width: 50, titleAlign: 'center', columnAlign: 'center', isResize: true},
+            {field: 'passing_rate', title: 'Passing rate', width: 50, titleAlign: 'center', columnAlign: 'center', isResize: true},
+          ]
+        }
+      }
+    })
+    new Vue({
+      el: '#app1',
+      data: function() {
+        return {
+          tableData: {{ report|safe }},
+          columns: [
+            {field: 'test_case', title: 'Test case', width: 650, titleAlign: 'center', columnAlign: 'center', isResize: true},
+            {field: 'seed', title: 'Seed', width: 50, titleAlign: 'center', columnAlign: 'center', isResize: true},
+            {
+              field: 'status', title:'Status', width: 50, titleAlign: 'center', columnAlign: 'center',
+              formatter: function (rowData,rowIndex,pagingIndex,field) {
+                return '<span style="color:' + (rowData.status === 'Pass' ? 'green' : rowData.status === 'Fail' ? 'red' : 'orange') + ';font-weight: bold;">' + rowData.status + '</span>'
+              }, isResize: true
+            },
+            {field: 'report', title: 'Report', width: 50, titleAlign: 'center', columnAlign: 'center', componentName: 'report-operation', isResize: true}
+          ]
+        }
+      }
+    })
+    Vue.component('report-operation', {
+      template:`<span><a href="" @click.stop.prevent="view()">View</a></span>`,
+      props: {
+        rowData: {
+          type: Object
+        }
+      },
+      methods: {
+        view() {
+          window.open(this.rowData.link)
+        }
+      }
+    })
+  </script>
+{% include "copyright.html" %}
+</body>
+</html>

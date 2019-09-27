@@ -1,0 +1,4 @@
+#!/bin/csh
+python3.7 manage.py runserver 0.0.0.0:2019 &
+python3.7 -m celery -A pango worker -l info &
+python3.7 -m celery -A pango beat -l info &

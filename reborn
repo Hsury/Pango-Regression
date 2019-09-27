@@ -1,0 +1,8 @@
+#!/bin/csh
+rm -f db.sqlite3
+rm -f celerybeat.pid
+rm -f regression/migrations/0*.py
+rm -f report/*
+python3.7 manage.py makemigrations
+python3.7 manage.py migrate
+python3.7 manage.py createsuperuser --username admin --email i@hsury.com

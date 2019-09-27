@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Regression Report List of {{ task }}</title>
+</head>
+<body>
+  <div style="text-align: center"><a href="/"><img src="{% static 'pango-logo.png' %}" alt="Pango" /></a></div>
+  <h1 style="text-align: center">Regression Report List</h1>
+  <h2 style="font-size: 39%; text-align: center">Task: {% if task_link %}<a href="{{ task_link }}">{{ task }}</a>{% else %}{{ task }}{% endif %}</h2>
+  <h2 style="font-size: 39%; text-align: center">Project: {% if project_link %}<a href="{{ project_link }}">{{ project }}</a>{% else %}{{ project }}{% endif %}</h2>
+  {% if latest_report_link %}<p style="font-size: 39%; text-align: center"><a href="{{ latest_report_link }}">View Latest Report Detail</a></p>{% endif %}
+  <br/>
+  <div id="app">
+    <ve-line :data="chartData" :data-empty="dataEmpty" :settings="chartSettings" :events="chartEvents" height="640px"></ve-line>
+  </div>
+  <script src="{% static 'vue.min.js' %}"></script>
+  <script src="{% static 'v-charts/echarts.min.js' %}"></script>
+  <script src="{% static 'v-charts/line.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'v-charts/style.min.css' %}">
+  <script>
+    new Vue({
+      el: '#app',
+      data: function () {
+        this.chartSettings = {
+          axisSite: { right: ['Passing rate'] },
+          yAxisType: ['normal', 'percent'],
+          yAxisName: ['Quantity', 'Percentage'],
+        }
+        var self = this
+        this.chartEvents = {
+          click: function (e) {
+            window.open(self.chartData.rows[e.dataIndex].Link)
+          }
+        }
+        return {
+          chartData: {
+            columns: ['Time', 'Pass', 'Fail', 'Unknown', 'Total', 'Passing rate'],
+            rows: [{% for report in report_list %}
+              { 'Time': '{{ report.format_time }}', 'Pass': {{ report.pass }}, 'Fail': {{ report.fail }}, 'Unknown': {{ report.unknown }}, 'Total': {{ report.total }}, 'Passing rate': {{ report.passing_rate }}, 'Link': '{{ report.link }}'},{% endfor %}
+            ]
+          },
+          dataEmpty: {% if report_list %}false{% else %}true{% endif %},
+        }
+      },
+      components: { VeLine }
+    })
+  </script>
+{% include "copyright.html" %}
+</body>
+</html>

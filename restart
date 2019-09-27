@@ -1,0 +1,4 @@
+#!/bin/csh
+stop.sh
+start.sh
+

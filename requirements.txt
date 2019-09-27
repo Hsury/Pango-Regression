@@ -1,0 +1,7 @@
+django
+sqlalchemy
+celery
+django-celery-results
+django-celery-beat
+django-modeladmin-reorder
+paramiko
